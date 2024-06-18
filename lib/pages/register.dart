@@ -1,10 +1,10 @@
-import 'package:e_commerce_app/pages/register.dart';
+import 'package:e_commerce_app/pages/login.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:e_commerce_app/widgets/constants.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class Register extends StatelessWidget {
+  const Register({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +20,15 @@ class Login extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: 64,
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    obscureText: false,
+                    decoration: decorationTextfield.copyWith(
+                        hintText: "Enter Your username : "),
+                  ),
+                  SizedBox(
+                    height: 33,
                   ),
                   TextField(
                     keyboardType: TextInputType.emailAddress,
@@ -48,7 +57,7 @@ class Login extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8))),
                     ),
                     child: Text(
-                      "Sign in",
+                      "Register",
                       style: TextStyle(fontSize: 19),
                     ),
                   ),
@@ -64,10 +73,10 @@ class Login extends StatelessWidget {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Register()),
+                                builder: (context) => const Login()),
                           );
                         },
-                        child: Text('sign up',
+                        child: Text('sign in',
                             style:
                                 TextStyle(color: Colors.black, fontSize: 20)),
                       )
