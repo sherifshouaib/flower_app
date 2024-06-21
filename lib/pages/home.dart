@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/model/item.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -16,13 +17,13 @@ class Home extends StatelessWidget {
                 UserAccountsDrawerHeader(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/images/nature.webp"),
+                        image: AssetImage("assets/images/test.jpg"),
                         fit: BoxFit.cover),
                   ),
                   currentAccountPicture: CircleAvatar(
                       radius: 55,
                       backgroundImage:
-                          AssetImage("assets/images/john cena.jpeg")),
+                          AssetImage("assets/images/ali.jpg")),
                   accountName: Text("ali Hassan",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
@@ -104,7 +105,7 @@ class Home extends StatelessWidget {
               childAspectRatio: 3 / 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 33),
-          itemCount: 4,
+          itemCount: items.length,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {},
@@ -118,7 +119,7 @@ class Home extends StatelessWidget {
                       left: 0,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(55),
-                        child: Image.asset('assets/images/plant_image.jpeg'),
+                        child: Image.asset(items[index].imgPath),
                       ),
                     ),
                   ],
