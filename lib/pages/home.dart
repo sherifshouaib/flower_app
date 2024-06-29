@@ -1,6 +1,9 @@
 import 'package:e_commerce_app/model/item.dart';
+import 'package:e_commerce_app/pages/details_screen.dart';
+import 'package:e_commerce_app/provider/cart.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -22,8 +25,7 @@ class Home extends StatelessWidget {
                   ),
                   currentAccountPicture: CircleAvatar(
                       radius: 55,
-                      backgroundImage:
-                          AssetImage("assets/images/ali.jpg")),
+                      backgroundImage: AssetImage("assets/images/ali.jpg")),
                   accountName: Text("ali Hassan",
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
@@ -58,47 +60,48 @@ class Home extends StatelessWidget {
       ),
       appBar: AppBar(
         actions: [
-          Row(
-            children: [
-              Stack(
-                children: [
-                  Positioned(
-                    bottom: 24,
-                    child: Container(
-                      child: Text(
-                        '8',
-                        style: TextStyle(
-                            fontSize: 16, color: Color.fromARGB(255, 0, 0, 0)),
+          Consumer<Cart>(builder: ((context, classInstancee, child) {
+            return Row(
+              children: [
+                Stack(
+                  children: [
+                    Positioned(
+                      bottom: 24,
+                      child: Container(
+                        child: Text(
+                          '${classInstancee.selectedProducts.length}',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            color: Color.fromARGB(211, 164, 255, 193),
+                            shape: BoxShape.circle),
                       ),
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(211, 164, 255, 193),
-                          shape: BoxShape.circle),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.add_shopping_cart),
+                    ),
+                  ],
+                ),
+                 Padding(
+                  padding: EdgeInsets.only(right: 12.0),
+                  child: Text(
+                    '\$ ${classInstancee.price}',
+                    style: TextStyle(
+                      fontSize: 18,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.add_shopping_cart),
-                  ),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.only(right: 12.0),
-                child: Text(
-                  '\$ 13',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
                 ),
-              ),
-            ],
-          )
+              ],
+            );
+          })),
         ],
         backgroundColor: appbarGreen,
         title: Text('Home'),
       ),
-     
-     
       body: Padding(
         padding: const EdgeInsets.only(top: 22),
         child: GridView.builder(
@@ -110,7 +113,14 @@ class Home extends StatelessWidget {
           itemCount: items.length,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Details(product: items[index]),
+                  ),
+                );
+              },
               child: GridTile(
                 child: Stack(
                   children: [
@@ -128,10 +138,14 @@ class Home extends StatelessWidget {
                 ),
                 footer: GridTileBar(
                   backgroundColor: Color.fromARGB(66, 73, 127, 110),
-                  trailing: IconButton(
-                      color: Color.fromARGB(255, 62, 94, 70),
-                      onPressed: () {},
-                      icon: Icon(Icons.add)),
+                  trailing: Consumer<Cart>(builder: ((context, carttt, child) {
+                    return IconButton(
+                        color: Color.fromARGB(255, 62, 94, 70),
+                        onPressed: () {
+                          carttt.add(items[index]);
+                        },
+                        icon: Icon(Icons.add));
+                  })),
                   leading: Text("\$12.99"),
                   title: Text(
                     "",
