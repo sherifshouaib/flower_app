@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/pages/checkout.dart';
 import 'package:e_commerce_app/pages/details_screen.dart';
 import 'package:e_commerce_app/pages/home.dart';
 import 'package:e_commerce_app/pages/login.dart';
