@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:e_commerce_app/pages/login.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:e_commerce_app/widgets/constants.dart';
 import 'package:e_commerce_app/widgets/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 
 class Register extends StatefulWidget {
   Register({super.key});
@@ -20,6 +21,17 @@ class _RegisterState extends State<Register> {
   bool isLoading = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  bool isPassword8Char = false;
+  onPasswordChanged(String password) {
+    isPassword8Char = false;
+
+    setState(() {
+      if (password.contains(RegExp(r'.{8,}'))) {
+        isPassword8Char = true;
+      }
+    });
+  }
 
   register() async {
     setState(() {
@@ -69,11 +81,8 @@ class _RegisterState extends State<Register> {
               child: Form(
                 key: _formKey,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 64,
-                    ),
                     TextField(
                       keyboardType: TextInputType.emailAddress,
                       obscureText: false,
@@ -87,10 +96,11 @@ class _RegisterState extends State<Register> {
                     ),
                     TextFormField(
                       // we return "null" when something is valid
-                      validator: (value) {
-                        return value != null && !EmailValidator.validate(value)
-                            ? "Enter a valid email"
-                            : null;
+                      validator: (email) {
+                        return email!.contains(RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))
+                            ? null
+                            : "Enter a valid email";
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: emailController,
@@ -105,6 +115,9 @@ class _RegisterState extends State<Register> {
                       height: 33,
                     ),
                     TextFormField(
+                      onChanged: (password) {
+                        onPasswordChanged(password);
+                      },
                       validator: (value) {
                         return value!.length < 8
                             ? "Enter at least 8 characters"
@@ -127,6 +140,152 @@ class _RegisterState extends State<Register> {
                               : Icon(Icons.visibility_off),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          height: 20,
+                          width: 20,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color:
+                                isPassword8Char ? Colors.green : Colors.white,
+                            border: Border.all(
+                                color:
+                                    const Color.fromARGB(255, 161, 159, 159)),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 11,
+                        ),
+                        Text(
+                          'At least 8 characters',
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          height: 20,
+                          width: 20,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            border: Border.all(
+                                color:
+                                    const Color.fromARGB(255, 161, 159, 159)),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 11,
+                        ),
+                        Text(
+                          'At least 1 number',
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          height: 20,
+                          width: 20,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            border: Border.all(
+                                color:
+                                    const Color.fromARGB(255, 161, 159, 159)),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 11,
+                        ),
+                        Text(
+                          'Has Uppercase',
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          height: 20,
+                          width: 20,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            border: Border.all(
+                                color:
+                                    const Color.fromARGB(255, 161, 159, 159)),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 11,
+                        ),
+                        Text(
+                          'Has Lowercase',
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          height: 20,
+                          width: 20,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            border: Border.all(
+                                color:
+                                    const Color.fromARGB(255, 161, 159, 159)),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 11,
+                        ),
+                        Text(
+                          'Has Special Characters',
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 33,
