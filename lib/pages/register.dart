@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:e_commerce_app/pages/login.dart';
+import 'package:e_commerce_app/pages/sign_in.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:e_commerce_app/widgets/constants.dart';
 import 'package:e_commerce_app/widgets/snackbar.dart';
@@ -36,7 +36,6 @@ class _RegisterState extends State<Register> {
     hasSpecialCharacters = false;
 
     setState(() {
-
       if (password.contains(RegExp(r'.{8,}'))) {
         isPassword8Char = true;
       }
@@ -55,10 +54,7 @@ class _RegisterState extends State<Register> {
       if (password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
         hasSpecialCharacters = true;
       }
-
-
-    }
-    );
+    });
   }
 
   register() async {
@@ -99,273 +95,279 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 247, 247, 247),
-        body: Center(
-          child: Padding(
-            padding: EdgeInsets.all(33.0),
-            child: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      obscureText: false,
-                      decoration: decorationTextfield.copyWith(
-                        hintText: "Enter Your username : ",
-                        suffixIcon: Icon(Icons.person),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Register'),
+        elevation: 0,
+        backgroundColor: appbarGreen,
+      ),
+      backgroundColor: Color.fromARGB(255, 247, 247, 247),
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(33.0),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    obscureText: false,
+                    decoration: decorationTextfield.copyWith(
+                      hintText: "Enter Your username : ",
+                      suffixIcon: Icon(Icons.person),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 33,
+                  ),
+                  TextFormField(
+                    // we return "null" when something is valid
+                    validator: (email) {
+                      return email!.contains(RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))
+                          ? null
+                          : "Enter a valid email";
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    obscureText: false,
+                    decoration: decorationTextfield.copyWith(
+                      hintText: "Enter Your Email : ",
+                      suffixIcon: Icon(Icons.email),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 33,
+                  ),
+                  TextFormField(
+                    onChanged: (password) {
+                      onPasswordChanged(password);
+                    },
+                    validator: (value) {
+                      return value!.length < 8
+                          ? "Enter at least 8 characters"
+                          : null;
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: passwordController,
+                    keyboardType: TextInputType.text,
+                    obscureText: isVisible ? true : false,
+                    decoration: decorationTextfield.copyWith(
+                      hintText: 'Enter Your Password : ',
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isVisible = !isVisible;
+                          });
+                        },
+                        icon: isVisible
+                            ? Icon(Icons.visibility)
+                            : Icon(Icons.visibility_off),
                       ),
                     ),
-                    SizedBox(
-                      height: 33,
-                    ),
-                    TextFormField(
-                      // we return "null" when something is valid
-                      validator: (email) {
-                        return email!.contains(RegExp(
-                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))
-                            ? null
-                            : "Enter a valid email";
-                      },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      obscureText: false,
-                      decoration: decorationTextfield.copyWith(
-                        hintText: "Enter Your Email : ",
-                        suffixIcon: Icon(Icons.email),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 33,
-                    ),
-                    TextFormField(
-                      onChanged: (password) {
-                        onPasswordChanged(password);
-                      },
-                      validator: (value) {
-                        return value!.length < 8
-                            ? "Enter at least 8 characters"
-                            : null;
-                      },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: passwordController,
-                      keyboardType: TextInputType.text,
-                      obscureText: isVisible ? true : false,
-                      decoration: decorationTextfield.copyWith(
-                        hintText: 'Enter Your Password : ',
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              isVisible = !isVisible;
-                            });
-                          },
-                          icon: isVisible
-                              ? Icon(Icons.visibility)
-                              : Icon(Icons.visibility_off),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: isPassword8Char ? Colors.green : Colors.white,
+                          border: Border.all(
+                              color: const Color.fromARGB(255, 161, 159, 159)),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 12,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          child: Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                          height: 20,
-                          width: 20,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color:
-                                isPassword8Char ? Colors.green : Colors.white,
-                            border: Border.all(
-                                color:
-                                    const Color.fromARGB(255, 161, 159, 159)),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 11,
-                        ),
-                        Text(
-                          'At least 8 characters',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          child: Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                          height: 20,
-                          width: 20,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: isPasswordHas1Number
-                                ? Colors.green
-                                : Colors.white,
-                            border: Border.all(
-                                color:
-                                    const Color.fromARGB(255, 161, 159, 159)),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 11,
-                        ),
-                        Text(
-                          'At least 1 number',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          child: Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                          height: 20,
-                          width: 20,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color:hasUppercase ? Colors.green : Colors.white,
-                            border: Border.all(
-                                color:
-                                    const Color.fromARGB(255, 161, 159, 159)),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 11,
-                        ),
-                        Text(
-                          'Has Uppercase',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          child: Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                          height: 20,
-                          width: 20,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: hasLowercase ? Colors.green : Colors.white,
-                            border: Border.all(
-                                color:
-                                    const Color.fromARGB(255, 161, 159, 159)),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 11,
-                        ),
-                        Text(
-                          'Has Lowercase',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          child: Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                          height: 20,
-                          width: 20,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color:hasSpecialCharacters ? Colors.green : Colors.white,
-                            border: Border.all(
-                                color:
-                                    const Color.fromARGB(255, 161, 159, 159)),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 11,
-                        ),
-                        Text(
-                          'Has Special Characters',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 33,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          register();
-                        } else {
-                          showSnackBar(context, "ERROR");
-                        }
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(BTNgreen),
-                        padding: MaterialStateProperty.all(EdgeInsets.all(12)),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8))),
+                      SizedBox(
+                        width: 11,
                       ),
-                      child: isLoading
-                          ? CircularProgressIndicator(
-                              color: Colors.white,
-                            )
-                          : Text(
-                              "Register",
-                              style: TextStyle(fontSize: 19),
-                            ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Do not have an account?',
-                          style: TextStyle(fontSize: 18),
+                      Text(
+                        'At least 8 characters',
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Login()),
-                            );
-                          },
-                          child: Text('sign in',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 20)),
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: isPasswordHas1Number
+                              ? Colors.green
+                              : Colors.white,
+                          border: Border.all(
+                              color: const Color.fromARGB(255, 161, 159, 159)),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 11,
+                      ),
+                      Text(
+                        'At least 1 number',
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: hasUppercase ? Colors.green : Colors.white,
+                          border: Border.all(
+                              color: const Color.fromARGB(255, 161, 159, 159)),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 11,
+                      ),
+                      Text(
+                        'Has Uppercase',
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: hasLowercase ? Colors.green : Colors.white,
+                          border: Border.all(
+                              color: const Color.fromARGB(255, 161, 159, 159)),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 11,
+                      ),
+                      Text(
+                        'Has Lowercase',
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: hasSpecialCharacters
+                              ? Colors.green
+                              : Colors.white,
+                          border: Border.all(
+                              color: const Color.fromARGB(255, 161, 159, 159)),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 11,
+                      ),
+                      Text(
+                        'Has Special Characters',
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 33,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await register();
+                        if (!mounted) return;
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()),
+                        );
+                      } else {
+                        showSnackBar(context, "ERROR");
+                      }
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(BTNgreen),
+                      padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8))),
+                    ),
+                    child: isLoading
+                        ? CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : Text(
+                            "Register",
+                            style: TextStyle(fontSize: 19),
+                          ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Do not have an account?',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => Login()),
+                          );
+                        },
+                        child: Text(
+                          'sign in',
+                          style: TextStyle(
+                              fontSize: 20,
+                              decoration: TextDecoration.underline),
+                        ),
+                      )
+                    ],
+                  )
+                ],
               ),
             ),
           ),
