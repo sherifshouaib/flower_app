@@ -1,10 +1,12 @@
 import 'package:e_commerce_app/model/item.dart';
+import 'package:e_commerce_app/provider/cart.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Details extends StatefulWidget {
-Item product;
-Details({required this.product});
+  Item product;
+  Details({required this.product});
 
   @override
   State<Details> createState() => _DetailsState();
@@ -16,9 +18,9 @@ class _DetailsState extends State<Details> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final carttt = Provider.of<Cart>(context);
 
-      
+    return Scaffold(
       appBar: AppBar(
         actions: [
           Row(
@@ -28,15 +30,15 @@ class _DetailsState extends State<Details> {
                   Positioned(
                     bottom: 24,
                     child: Container(
-                      child: Text(
-                        '8',
-                        style: TextStyle(
-                            fontSize: 16, color: Color.fromARGB(255, 0, 0, 0)),
-                      ),
                       padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           color: Color.fromARGB(211, 164, 255, 193),
                           shape: BoxShape.circle),
+                      child: Text(
+                        '${carttt.selectedProducts.length}',
+                        style: TextStyle(
+                            fontSize: 16, color: Color.fromARGB(255, 0, 0, 0)),
+                      ),
                     ),
                   ),
                   IconButton(
@@ -45,10 +47,10 @@ class _DetailsState extends State<Details> {
                   ),
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.only(right: 12.0),
+               Padding(
+                padding: const EdgeInsets.only(right: 12.0),
                 child: Text(
-                  '\$ 13',
+                  '\$ ${carttt.price}',
                   style: TextStyle(
                     fontSize: 18,
                   ),
@@ -60,8 +62,6 @@ class _DetailsState extends State<Details> {
         backgroundColor: appbarGreen,
         title: Text('Details screen'),
       ),
-   
-   
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -81,12 +81,12 @@ class _DetailsState extends State<Details> {
               children: [
                 Container(
                   padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 255, 129, 129),
+                  ),
                   child: Text(
                     'New',
                     style: TextStyle(fontSize: 15),
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 255, 129, 129),
                   ),
                 ),
                 SizedBox(
@@ -169,7 +169,7 @@ class _DetailsState extends State<Details> {
                 });
               },
               child: Text(
-               isShowMore ?  'Show more' : 'Show less',
+                isShowMore ? 'Show more' : 'Show less',
                 style: TextStyle(fontSize: 18),
               ),
             ),

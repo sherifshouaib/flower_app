@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'package:e_commerce_app/provider/google_signin.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:e_commerce_app/pages/forgot_passowrd.dart';
 import 'package:e_commerce_app/pages/register.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
@@ -7,6 +8,7 @@ import 'package:e_commerce_app/widgets/constants.dart';
 import 'package:e_commerce_app/widgets/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   Login({super.key});
@@ -53,6 +55,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final googleSignInProvider = Provider.of<GoogleSignInProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appbarGreen,
@@ -158,7 +162,53 @@ class _LoginState extends State<Login> {
                       ),
                     )
                   ],
-                )
+                ),
+                SizedBox(
+                  height: 17,
+                ),
+                SizedBox(
+                  width: 299,
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Divider(
+                        thickness: 0.6,
+                      )),
+                      Text(
+                        "OR",
+                        style: TextStyle(),
+                      ),
+                      Expanded(
+                          child: Divider(
+                        thickness: 0.6,
+                      )),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 27),
+                  child: GestureDetector(
+                    onTap: () {
+
+                      googleSignInProvider.googlelogin();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(13),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            //color: Colors.purple,
+                            width: 1,
+                            color: Color.fromARGB(255, 200, 67, 79),
+                          )),
+                      child: SvgPicture.asset(
+                        "assets/Icons/icons8-google.svg",
+                        color: Color.fromARGB(255, 200, 67, 79),
+                        height: 27,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
