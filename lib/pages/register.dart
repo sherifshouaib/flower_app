@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/pages/sign_in.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:e_commerce_app/widgets/constants.dart';
@@ -21,6 +22,10 @@ class _RegisterState extends State<Register> {
   bool isLoading = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  final usernameController = TextEditingController();
+  final ageController = TextEditingController();
+  final titleController = TextEditingController();
 
   bool isPassword8Char = false;
   bool isPasswordHas1Number = false;
@@ -68,6 +73,21 @@ class _RegisterState extends State<Register> {
         email: emailController.text,
         password: passwordController.text,
       );
+
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('userSSS');
+
+      users
+          .doc(credential.user!.uid)
+          .set({
+            'username': usernameController.text,
+            'age': ageController.text,
+            'title': titleController.text,
+            'email': emailController.text,
+            'pass': passwordController.text,
+          })
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         showSnackBar(context, "The password provided is too weak.");
@@ -90,6 +110,9 @@ class _RegisterState extends State<Register> {
     // TODO: implement dispose
     emailController.dispose();
     passwordController.dispose();
+    usernameController.dispose();
+    ageController.dispose();
+    titleController.dispose();
     super.dispose();
   }
 
@@ -112,6 +135,7 @@ class _RegisterState extends State<Register> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   TextField(
+                    controller: usernameController,
                     keyboardType: TextInputType.emailAddress,
                     obscureText: false,
                     decoration: decorationTextfield.copyWith(
@@ -123,6 +147,7 @@ class _RegisterState extends State<Register> {
                     height: 22,
                   ),
                   TextFormField(
+                    controller: ageController,
                     keyboardType: TextInputType.number,
                     obscureText: false,
                     decoration: decorationTextfield.copyWith(
@@ -134,6 +159,7 @@ class _RegisterState extends State<Register> {
                     height: 22,
                   ),
                   TextFormField(
+                    controller: titleController,
                     keyboardType: TextInputType.text,
                     obscureText: false,
                     decoration: decorationTextfield.copyWith(
