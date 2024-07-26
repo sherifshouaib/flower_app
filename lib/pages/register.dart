@@ -120,7 +120,29 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   SizedBox(
-                    height: 33,
+                    height: 22,
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    obscureText: false,
+                    decoration: decorationTextfield.copyWith(
+                      hintText: 'Enter Your age : ',
+                      suffixIcon: Icon(Icons.pest_control_rodent),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 22,
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.text,
+                    obscureText: false,
+                    decoration: decorationTextfield.copyWith(
+                      hintText: 'Enter Your title : ',
+                      suffixIcon: Icon(Icons.person_outline),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 22,
                   ),
                   TextFormField(
                     // we return "null" when something is valid
@@ -140,7 +162,7 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   SizedBox(
-                    height: 33,
+                    height: 22,
                   ),
                   TextFormField(
                     onChanged: (password) {

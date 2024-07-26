@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/model/item.dart';
 import 'package:e_commerce_app/pages/checkout.dart';
 import 'package:e_commerce_app/pages/details_screen.dart';
+import 'package:e_commerce_app/pages/profile_page.dart';
 import 'package:e_commerce_app/provider/cart.dart';
 import 'package:e_commerce_app/widgets/appbar.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
@@ -82,8 +83,8 @@ class Home extends StatelessWidget {
                   ),
                   currentAccountPicture: CircleAvatar(
                       radius: 55,
-                      backgroundImage: NetworkImage(userrr.photoURL!)),
-                  accountName: Text(userrr.displayName!,
+                      backgroundImage: AssetImage('assets/images/ali.jpg')),
+                  accountName: Text('Sherif Shouaib',
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                       )),
@@ -116,10 +117,20 @@ class Home extends StatelessWidget {
                     leading: Icon(Icons.help_center),
                     onTap: () {}),
                 ListTile(
+                    title: Text("Profile Page"),
+                    leading: Icon(Icons.person),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfilePage()));
+                    }),
+
+                ListTile(
                     title: Text("Logout"),
                     leading: Icon(Icons.exit_to_app),
-                    onTap: ()  {
-                       FirebaseAuth.instance.signOut();
+                    onTap: () {
+                      FirebaseAuth.instance.signOut();
                     }),
               ],
             ),
