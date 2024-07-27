@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -63,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 11,
                 ),
                 Text(
-                  'Email:        ',
+                  'Email: ${credential!.email}     ',
                   style: TextStyle(
                     fontSize: 17,
                   ),
@@ -72,7 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 11,
                 ),
                 Text(
-                  'Created date:      ',
+                  'Created date: ${DateFormat("MMMM d, y").format(credential!.metadata.creationTime!)}',
                   style: TextStyle(
                     fontSize: 17,
                   ),
@@ -81,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 11,
                 ),
                 Text(
-                  'Last Signed In:   ',
+                  'Last Signed In: ${DateFormat("MMMM d, y").format(credential!.metadata.lastSignInTime!)}',
                   style: TextStyle(
                     fontSize: 17,
                   ),

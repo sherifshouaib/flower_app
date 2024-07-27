@@ -74,6 +74,7 @@ class _RegisterState extends State<Register> {
         password: passwordController.text,
       );
 
+      print(credential.user!.uid);
       CollectionReference users =
           FirebaseFirestore.instance.collection('userSSS');
 
