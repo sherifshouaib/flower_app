@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/widgets/colors.dart';
+import 'package:e_commerce_app/widgets/data_from_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -106,6 +107,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
+            ),
+           
+           
+            GetDataFromFirestore(
+              documentId: credential!.uid,
             ),
           ],
         ),
