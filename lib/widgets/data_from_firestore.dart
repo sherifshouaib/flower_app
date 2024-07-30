@@ -107,11 +107,26 @@ class _GetDataFromFirestoreState extends State<GetDataFromFirestore> {
                     "Username: ${data['username']}",
                     style: TextStyle(fontSize: 17),
                   ),
-                  IconButton(
-                      onPressed: () {
-                        myDialog(data, 'username');
-                      },
-                      icon: Icon(Icons.edit)),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            users
+                                .doc(credential!.uid)
+                                .update({"username": FieldValue.delete()});
+                          });
+                        },
+                        icon: Icon(Icons.delete),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          myDialog(data, 'username');
+                        },
+                        icon: Icon(Icons.edit),
+                      ),
+                    ],
+                  ),
                 ],
               ),
               Row(
@@ -173,6 +188,24 @@ class _GetDataFromFirestoreState extends State<GetDataFromFirestore> {
                     icon: Icon(Icons.edit),
                   ),
                 ],
+              ),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    setState(
+                      () {
+                        users.doc(credential!.uid).delete();
+                      },
+                    );
+                  },
+                  child: Text(
+                    'Delete Data',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
               ),
             ],
           );

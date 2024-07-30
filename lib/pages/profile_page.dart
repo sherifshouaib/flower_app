@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:e_commerce_app/widgets/data_from_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -92,7 +93,31 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
               SizedBox(
-                height: 55,
+                height: 22,
+              ),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    setState(
+                      () {
+                       
+                        credential!.delete();
+
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
+                  child: Text(
+                    'Delete User',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 22,
               ),
               Center(
                 child: Container(
@@ -109,8 +134,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-             
-             
               GetDataFromFirestore(
                 documentId: credential!.uid,
               ),
