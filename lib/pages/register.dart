@@ -7,6 +7,7 @@ import 'package:e_commerce_app/widgets/constants.dart';
 import 'package:e_commerce_app/widgets/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Register extends StatefulWidget {
   Register({super.key});
@@ -18,6 +19,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   bool isVisible = true;
   final _formKey = GlobalKey<FormState>();
+  File? imgPath;
 
   bool isLoading = false;
   final emailController = TextEditingController();
@@ -32,6 +34,22 @@ class _RegisterState extends State<Register> {
   bool hasUppercase = false;
   bool hasLowercase = false;
   bool hasSpecialCharacters = false;
+
+  uploadImage2Screen() async {
+    final pickedImg =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    try {
+      if (pickedImg != null) {
+        setState(() {
+          imgPath = File(pickedImg.path);
+        });
+      } else {
+        print("NO img selected");
+      }
+    } catch (e) {
+      print("Error => $e");
+    }
+  }
 
   onPasswordChanged(String password) {
     isPassword8Char = false;
@@ -135,6 +153,48 @@ class _RegisterState extends State<Register> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color.fromARGB(125, 78, 91, 110),
+                    ),
+                    child: Stack(
+                      children: [
+                        imgPath == null
+                            ? CircleAvatar(
+                                backgroundColor:
+                                    Color.fromARGB(255, 225, 225, 225),
+                                radius: 71,
+                                //backgroundImage: AssetImage('assets/images/avatar.png'),
+                                backgroundImage:
+                                    AssetImage('assets/images/avatar.png'),
+                              )
+                            : ClipOval(
+                                child: Image.file(
+                                  imgPath!,
+                                  width: 145,
+                                  height: 145,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                        Positioned(
+                          left: 95,
+                          bottom: -10,
+                          child: IconButton(
+                            onPressed: () {
+                              uploadImage2Screen();
+                            },
+                            icon: const Icon(Icons.add_a_photo),
+                            color: Color.fromARGB(255, 94, 115, 128),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 33,
+                  ),
                   TextField(
                     controller: usernameController,
                     keyboardType: TextInputType.emailAddress,

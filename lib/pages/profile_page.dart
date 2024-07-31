@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:e_commerce_app/widgets/data_from_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -14,6 +17,24 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final credential = FirebaseAuth.instance.currentUser;
+
+  File? imgPath;
+
+  uploadImage2Screen() async {
+    final pickedImg =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    try {
+      if (pickedImg != null) {
+        setState(() {
+          imgPath = File(pickedImg.path);
+        });
+      } else {
+        print("NO img selected");
+      }
+    } catch (e) {
+      print("Error => $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +68,53 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
+              Center(
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color.fromARGB(125, 78, 91, 110),
+                  ),
+                  child: Stack(
+                    children: [
+                      imgPath == null
+                          ? CircleAvatar(
+                              backgroundColor:
+                                  Color.fromARGB(255, 225, 225, 225),
+                              radius: 71,
+                              //backgroundImage: AssetImage('assets/images/avatar.png'),
+                              backgroundImage:
+                                  AssetImage('assets/images/avatar.png'),
+                            )
+                          : ClipOval(
+                              child: Image.file(
+                                imgPath!,
+                                width: 145,
+                                height: 145,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                      Positioned(
+                        left: 102,
+                        bottom: -10,
+                        child: IconButton(
+                          onPressed: () {
+                            uploadImage2Screen();
+                          },
+                          icon: const Icon(Icons.add_a_photo),
+                          color: Color.fromARGB(255, 94, 115, 128),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              
+              SizedBox(
+                height: 33,
+              ),
               Center(
                 child: Container(
                   padding: EdgeInsets.all(11),
@@ -100,7 +168,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   onPressed: () {
                     setState(
                       () {
-                       
                         credential!.delete();
 
                         Navigator.pop(context);
