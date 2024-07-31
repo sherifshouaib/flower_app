@@ -35,9 +35,8 @@ class _RegisterState extends State<Register> {
   bool hasLowercase = false;
   bool hasSpecialCharacters = false;
 
-  uploadImage2Screen() async {
-    final pickedImg =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+  uploadImage2Screen(ImageSource source) async {
+    final pickedImg = await ImagePicker().pickImage(source: source);
     try {
       if (pickedImg != null) {
         setState(() {
@@ -49,6 +48,68 @@ class _RegisterState extends State<Register> {
     } catch (e) {
       print("Error => $e");
     }
+    if (!mounted) return;
+    Navigator.pop(context);
+  }
+
+  showmodel() {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(22),
+          height: 170,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  await uploadImage2Screen(ImageSource.camera);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.camera,
+                      size: 30,
+                    ),
+                    SizedBox(
+                      width: 11,
+                    ),
+                    Text(
+                      'From Camera',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 22,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  await uploadImage2Screen(ImageSource.gallery);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.photo_outlined,
+                      size: 30,
+                    ),
+                    SizedBox(
+                      width: 11,
+                    ),
+                    Text(
+                      'From Gallery',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   onPasswordChanged(String password) {
@@ -179,11 +240,12 @@ class _RegisterState extends State<Register> {
                                 ),
                               ),
                         Positioned(
-                          left: 95,
+                          left: 99,
                           bottom: -10,
                           child: IconButton(
                             onPressed: () {
-                              uploadImage2Screen();
+                              //  uploadImage2Screen();
+                              showmodel();
                             },
                             icon: const Icon(Icons.add_a_photo),
                             color: Color.fromARGB(255, 94, 115, 128),
