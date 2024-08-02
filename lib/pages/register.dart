@@ -45,7 +45,7 @@ class _RegisterState extends State<Register> {
       if (pickedImg != null) {
         setState(() {
           imgPath = File(pickedImg.path);
-          String imgName = basename(pickedImg.path);
+          imgName = basename(pickedImg.path);
           int random = Random().nextInt(9999999);
           imgName = "$random$imgName";
           print(imgName);
@@ -166,8 +166,6 @@ class _RegisterState extends State<Register> {
       await storageRef.putFile(imgPath!);
       String urll = await storageRef.getDownloadURL();
 
-
-
       print(credential.user!.uid);
       CollectionReference users =
           FirebaseFirestore.instance.collection('userSSS');
@@ -175,7 +173,7 @@ class _RegisterState extends State<Register> {
       users
           .doc(credential.user!.uid)
           .set({
-            'imgLink' : urll,
+            'imgLink': urll,
             'username': usernameController.text,
             'age': ageController.text,
             'title': titleController.text,
@@ -505,7 +503,9 @@ class _RegisterState extends State<Register> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      if (_formKey.currentState!.validate() && imgName != null && imgPath != null ) {
+                      if (_formKey.currentState!.validate() &&
+                          imgName != null &&
+                          imgPath != null) {
                         await register();
                         if (!mounted) return;
                         Navigator.pushReplacement(

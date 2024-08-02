@@ -5,6 +5,7 @@ import 'package:e_commerce_app/pages/profile_page.dart';
 import 'package:e_commerce_app/provider/cart.dart';
 import 'package:e_commerce_app/widgets/appbar.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
+import 'package:e_commerce_app/widgets/user_image_from_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -78,12 +79,12 @@ class Home extends StatelessWidget {
                 UserAccountsDrawerHeader(
                   decoration: BoxDecoration(
                     image: DecorationImage(
+                      
                         image: AssetImage("assets/images/test.jpg"),
                         fit: BoxFit.cover),
                   ),
-                  currentAccountPicture: CircleAvatar(
-                      radius: 55,
-                      backgroundImage: AssetImage('assets/images/ali.jpg')),
+                  currentAccountPicture: ImgUser(),
+
                   accountName: Text('Sherif Shouaib',
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
@@ -125,7 +126,6 @@ class Home extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => ProfilePage()));
                     }),
-
                 ListTile(
                     title: Text("Logout"),
                     leading: Icon(Icons.exit_to_app),

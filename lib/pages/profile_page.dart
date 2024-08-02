@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:e_commerce_app/widgets/data_from_firestore.dart';
+import 'package:e_commerce_app/widgets/user_image_from_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -79,14 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Stack(
                     children: [
                       imgPath == null
-                          ? CircleAvatar(
-                              backgroundColor:
-                                  Color.fromARGB(255, 225, 225, 225),
-                              radius: 71,
-                              //backgroundImage: AssetImage('assets/images/avatar.png'),
-                              backgroundImage:
-                                  AssetImage('assets/images/avatar.png'),
-                            )
+                          ? ImgUser()
                           : ClipOval(
                               child: Image.file(
                                 imgPath!,
