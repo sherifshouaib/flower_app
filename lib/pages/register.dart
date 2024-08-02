@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/pages/sign_in.dart';
@@ -8,6 +9,8 @@ import 'package:e_commerce_app/widgets/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' show basename;
 
 class Register extends StatefulWidget {
   Register({super.key});
@@ -20,6 +23,7 @@ class _RegisterState extends State<Register> {
   bool isVisible = true;
   final _formKey = GlobalKey<FormState>();
   File? imgPath;
+  String? imgName;
 
   bool isLoading = false;
   final emailController = TextEditingController();
@@ -41,6 +45,10 @@ class _RegisterState extends State<Register> {
       if (pickedImg != null) {
         setState(() {
           imgPath = File(pickedImg.path);
+          String imgName = basename(pickedImg.path);
+          int random = Random().nextInt(9999999);
+          imgName = "$random$imgName";
+          print(imgName);
         });
       } else {
         print("NO img selected");
@@ -153,6 +161,13 @@ class _RegisterState extends State<Register> {
         password: passwordController.text,
       );
 
+// Upload image to firebase storage
+      final storageRef = FirebaseStorage.instance.ref('users-imgs/$imgName');
+      await storageRef.putFile(imgPath!);
+      String urll = await storageRef.getDownloadURL();
+
+
+
       print(credential.user!.uid);
       CollectionReference users =
           FirebaseFirestore.instance.collection('userSSS');
@@ -160,6 +175,7 @@ class _RegisterState extends State<Register> {
       users
           .doc(credential.user!.uid)
           .set({
+            'imgLink' : urll,
             'username': usernameController.text,
             'age': ageController.text,
             'title': titleController.text,
@@ -489,7 +505,7 @@ class _RegisterState extends State<Register> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
+                      if (_formKey.currentState!.validate() && imgName != null && imgPath != null ) {
                         await register();
                         if (!mounted) return;
                         Navigator.pushReplacement(
