@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:e_commerce_app/widgets/data_from_firestore.dart';
+import 'package:e_commerce_app/widgets/snackbar.dart';
 import 'package:e_commerce_app/widgets/user_image_from_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -38,10 +39,10 @@ class _ProfilePageState extends State<ProfilePage> {
           imgName = "$random$imgName";
         });
       } else {
-        print("NO img selected");
+        showSnackBar(context, "NO img selected");
       }
     } catch (e) {
-      print("Error => $e");
+      showSnackBar(context, "Error => $e");
     }
   }
 
@@ -56,20 +57,20 @@ class _ProfilePageState extends State<ProfilePage> {
               if (!mounted) return;
               Navigator.pop(context);
             },
-            label: Text(
+            label: const Text(
               'logout',
               style: TextStyle(
                 color: Colors.white,
               ),
             ),
-            icon: Icon(
+            icon: const Icon(
               Icons.logout,
               color: Colors.white,
             ),
           ),
         ],
         backgroundColor: appbarGreen,
-        title: Text('Profile Page'),
+        title: const Text('Profile Page'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(22),
@@ -79,15 +80,15 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Center(
                 child: Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.all(5),
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color.fromARGB(125, 78, 91, 110),
                   ),
                   child: Stack(
                     children: [
                       imgPath == null
-                          ? ImgUser()
+                          ? const ImgUser()
                           : ClipOval(
                               child: Image.file(
                                 imgPath!,
@@ -118,24 +119,24 @@ class _ProfilePageState extends State<ProfilePage> {
                             }
                           },
                           icon: const Icon(Icons.add_a_photo),
-                          color: Color.fromARGB(255, 94, 115, 128),
+                          color: const Color.fromARGB(255, 94, 115, 128),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 33,
               ),
               Center(
                 child: Container(
-                  padding: EdgeInsets.all(11),
+                  padding: const EdgeInsets.all(11),
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 131, 177, 255),
+                    color: const Color.fromARGB(255, 131, 177, 255),
                     borderRadius: BorderRadius.circular(11),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Info from firebase Auth',
                     style: TextStyle(fontSize: 22),
                   ),
@@ -144,36 +145,36 @@ class _ProfilePageState extends State<ProfilePage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 11,
                   ),
                   Text(
                     'Email: ${credential!.email}     ',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 17,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 11,
                   ),
                   Text(
                     'Created date: ${DateFormat("MMMM d, y").format(credential!.metadata.creationTime!)}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 17,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 11,
                   ),
                   Text(
                     'Last Signed In: ${DateFormat("MMMM d, y").format(credential!.metadata.lastSignInTime!)}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 17,
                     ),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 22,
               ),
               Center(
@@ -187,7 +188,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       },
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     'Delete User',
                     style: TextStyle(
                       fontSize: 18,
@@ -196,17 +197,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 22,
               ),
               Center(
                 child: Container(
-                  padding: EdgeInsets.all(11),
+                  padding: const EdgeInsets.all(11),
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 131, 177, 255),
+                    color: const Color.fromARGB(255, 131, 177, 255),
                     borderRadius: BorderRadius.circular(11),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Info from firebase firestore',
                     style: TextStyle(
                       fontSize: 20,

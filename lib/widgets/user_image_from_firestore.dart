@@ -24,11 +24,11 @@ class _ImgUserState extends State<ImgUser> {
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text("Something went wrong");
+          return const Text("Something went wrong");
         }
 
         if (snapshot.hasData && !snapshot.data!.exists) {
-          return Text("Document does not exist");
+          return const Text("Document does not exist");
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
@@ -38,14 +38,14 @@ class _ImgUserState extends State<ImgUser> {
 //${data['title']}
 
           return CircleAvatar(
-            backgroundColor: Color.fromARGB(255, 225, 225, 225),
+            backgroundColor: const Color.fromARGB(255, 225, 225, 225),
             radius: 71,
             //backgroundImage: AssetImage('assets/images/avatar.png'),
             backgroundImage: NetworkImage(data['imgLink']),
           );
         }
 
-        return Text("loading");
+        return const Text("loading");
       },
     );
   }

@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:e_commerce_app/pages/sign_in.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
@@ -6,10 +5,9 @@ import 'package:e_commerce_app/widgets/constants.dart';
 import 'package:e_commerce_app/widgets/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ForgotPassowrd extends StatefulWidget {
-  ForgotPassowrd({super.key});
+  const ForgotPassowrd({super.key});
 
   @override
   State<ForgotPassowrd> createState() => _ForgotPassowrdState();
@@ -25,7 +23,7 @@ class _ForgotPassowrdState extends State<ForgotPassowrd> {
     showDialog(
         context: context,
         builder: (context) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(
               color: Colors.white,
             ),
@@ -38,7 +36,7 @@ class _ForgotPassowrdState extends State<ForgotPassowrd> {
       if (!mounted) return;
 
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
+          context, MaterialPageRoute(builder: (context) => const Login()));
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, "ERROR :  ${e.code} ");
     }
@@ -50,7 +48,6 @@ class _ForgotPassowrdState extends State<ForgotPassowrd> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     emailController.dispose();
     super.dispose();
   }
@@ -94,10 +91,10 @@ class _ForgotPassowrdState extends State<ForgotPassowrd> {
                     obscureText: false,
                     decoration: decorationTextfield.copyWith(
                       hintText: "Enter Your Email : ",
-                      suffixIcon: Icon(Icons.email),
+                      suffixIcon: const Icon(Icons.email),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 33,
                   ),
                   ElevatedButton(
@@ -109,16 +106,16 @@ class _ForgotPassowrdState extends State<ForgotPassowrd> {
                       }
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(BTNgreen),
-                      padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+                      backgroundColor: MaterialStateProperty.all(bTNgreen),
+                      padding: MaterialStateProperty.all(const EdgeInsets.all(12)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8))),
                     ),
                     child: isLoading
-                        ? CircularProgressIndicator(
+                        ? const CircularProgressIndicator(
                             color: Colors.white,
                           )
-                        : Text(
+                        : const Text(
                             "Reset Password",
                             style: TextStyle(fontSize: 19),
                           ),

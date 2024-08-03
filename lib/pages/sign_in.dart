@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:e_commerce_app/provider/google_signin.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:e_commerce_app/pages/forgot_passowrd.dart';
@@ -11,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
-  Login({super.key});
+  const Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
@@ -31,19 +30,20 @@ class _LoginState extends State<Login> {
     });
 
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, "ERROR :  ${e.code} ");
     }
+
     setState(() {
       isLoading = false;
     });
+    
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -56,17 +56,17 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appbarGreen,
-        title: Text('Sign in'),
+        title: const Text('Sign in'),
       ),
-      backgroundColor: Color.fromARGB(255, 247, 247, 247),
+      backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.all(33.0),
+          padding: const EdgeInsets.all(33.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 64,
                 ),
                 TextField(
@@ -75,10 +75,10 @@ class _LoginState extends State<Login> {
                   obscureText: false,
                   decoration: decorationTextfield.copyWith(
                     hintText: "Enter Your Email : ",
-                    suffixIcon: Icon(Icons.email),
+                    suffixIcon: const Icon(Icons.email),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 33,
                 ),
                 TextField(
@@ -94,12 +94,12 @@ class _LoginState extends State<Login> {
                         });
                       },
                       icon: isVisible
-                          ? Icon(Icons.visibility)
-                          : Icon(Icons.visibility_off),
+                          ? const Icon(Icons.visibility)
+                          : const Icon(Icons.visibility_off),
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 33,
                 ),
                 ElevatedButton(
@@ -109,17 +109,17 @@ class _LoginState extends State<Login> {
                     //   showSnackBar(context, 'Done ... ');
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(BTNgreen),
-                    padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+                    backgroundColor: MaterialStateProperty.all(bTNgreen),
+                    padding: MaterialStateProperty.all(const EdgeInsets.all(12)),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8))),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Sign in",
                     style: TextStyle(fontSize: 19),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 9,
                 ),
                 TextButton(
@@ -127,9 +127,9 @@ class _LoginState extends State<Login> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ForgotPassowrd()));
+                            builder: (context) => const ForgotPassowrd()));
                   },
-                  child: Text(
+                  child: const Text(
                     'Forgot password',
                     style: TextStyle(
                         fontSize: 18, decoration: TextDecoration.underline),
@@ -138,7 +138,7 @@ class _LoginState extends State<Login> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Do not have an account?',
                       style: TextStyle(fontSize: 18),
                     ),
@@ -146,14 +146,14 @@ class _LoginState extends State<Login> {
                       onPressed: () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => Register()),
+                          MaterialPageRoute(builder: (context) => const Register()),
                         );
                       },
                       child: isLoading
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               color: Colors.white,
                             )
-                          : Text(
+                          : const Text(
                               'sign up',
                               style: TextStyle(
                                 fontSize: 20,
@@ -163,10 +163,10 @@ class _LoginState extends State<Login> {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 17,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 299,
                   child: Row(
                     children: [
@@ -186,23 +186,23 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 27),
+                  margin: const EdgeInsets.symmetric(vertical: 27),
                   child: GestureDetector(
                     onTap: () {
                       googleSignInProvider.googlelogin();
                     },
                     child: Container(
-                      padding: EdgeInsets.all(13),
+                      padding: const EdgeInsets.all(13),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
                             //color: Colors.purple,
                             width: 1,
-                            color: Color.fromARGB(255, 200, 67, 79),
+                            color: const Color.fromARGB(255, 200, 67, 79),
                           )),
                       child: SvgPicture.asset(
                         "assets/Icons/icons8-google.svg",
-                        color: Color.fromARGB(255, 200, 67, 79),
+                        color: const Color.fromARGB(255, 200, 67, 79),
                         height: 27,
                       ),
                     ),

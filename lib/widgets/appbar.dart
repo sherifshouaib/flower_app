@@ -1,6 +1,5 @@
 import 'package:e_commerce_app/pages/checkout.dart';
 import 'package:e_commerce_app/provider/cart.dart';
-import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,13 +16,13 @@ class ProductsAndPrice extends StatelessWidget {
             Positioned(
               bottom: 24,
               child: Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(5),
+                decoration: const BoxDecoration(
                     color: Color.fromARGB(211, 164, 255, 193),
                     shape: BoxShape.circle),
                 child: Text(
                   '${carttt.itemCount}',
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 16, color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
@@ -33,7 +32,7 @@ class ProductsAndPrice extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Checkout(),
+                    builder: (context) => const Checkout(),
                   ),
                 );
               },
@@ -42,10 +41,10 @@ class ProductsAndPrice extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: EdgeInsets.only(right: 12.0),
+          padding: const EdgeInsets.only(right: 12.0),
           child: Text(
             '\$ ${carttt.price}',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
             ),
           ),

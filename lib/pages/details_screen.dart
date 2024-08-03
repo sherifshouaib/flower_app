@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Details extends StatefulWidget {
-  Item product;
-  Details({required this.product});
+  final Item product;
+  const Details({super.key, required this.product});
 
   @override
   State<Details> createState() => _DetailsState();
@@ -30,13 +30,13 @@ class _DetailsState extends State<Details> {
                   Positioned(
                     bottom: 24,
                     child: Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.all(5),
+                      decoration: const BoxDecoration(
                           color: Color.fromARGB(211, 164, 255, 193),
                           shape: BoxShape.circle),
                       child: Text(
                         '${carttt.selectedProducts.length}',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16, color: Color.fromARGB(255, 0, 0, 0)),
                       ),
                     ),
@@ -51,7 +51,7 @@ class _DetailsState extends State<Details> {
                 padding: const EdgeInsets.only(right: 12.0),
                 child: Text(
                   '\$ ${carttt.price}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                   ),
                 ),
@@ -60,39 +60,39 @@ class _DetailsState extends State<Details> {
           )
         ],
         backgroundColor: appbarGreen,
-        title: Text('Details screen'),
+        title: const Text('Details screen'),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Image.asset(widget.product.imgPath),
-            SizedBox(
+            const SizedBox(
               height: 11,
             ),
             Text(
               '\$ ${widget.product.price}',
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.all(4),
+                  decoration:  const BoxDecoration(
                     color: Color.fromARGB(255, 255, 129, 129),
                   ),
-                  child: Text(
+                  child: const Text(
                     'New',
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
-                Row(
+                const Row(
                   children: [
                     Icon(
                       Icons.star,
@@ -121,31 +121,31 @@ class _DetailsState extends State<Details> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 66,
                 ),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.edit_location,
                       size: 26,
                       color: Color.fromARGB(168, 3, 65, 27),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 3,
                     ),
                     Text(
                       widget.product.location,
-                      style: TextStyle(fontSize: 19),
+                      style: const TextStyle(fontSize: 19),
                     ),
                   ],
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
-            SizedBox(
+            const SizedBox(
               width: double.infinity,
               child: Text(
                 'Details : ',
@@ -153,12 +153,12 @@ class _DetailsState extends State<Details> {
                 textAlign: TextAlign.start,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Text(
               'A flower, also known as a bloom or blossom, is the reproductive structure found in flowering plants (plants of the division Angiospermae). Flowers consist of a combination of vegetative organs – sepals that enclose and protect the developing flower, petals that attract pollinators, and reproductive organs that produce gametophytes, which in flowering plants produce gametes. The male gametophytes, which produce sperm, are enclosed within pollen grains produced in the anthers. The female gametophytes are contained within the ovules produced in the carpels.',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
               maxLines: isShowMore ? 3 : null,
               overflow: TextOverflow.fade,
             ),
@@ -170,7 +170,7 @@ class _DetailsState extends State<Details> {
               },
               child: Text(
                 isShowMore ? 'Show more' : 'Show less',
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             ),
           ],

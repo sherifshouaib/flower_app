@@ -14,9 +14,9 @@ class Checkout extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appbarGreen,
-        title: Text('checkout screen'),
-        actions: [
-          ProductsAndPrice(),
+        title: const Text('checkout screen'),
+        actions: const[
+           ProductsAndPrice(),
         ],
       ),
       body: Column(
@@ -41,7 +41,7 @@ class Checkout extends StatelessWidget {
                             onPressed: () {
                               carttt.delete(carttt.selectedProducts[index]);
                             },
-                            icon: Icon(Icons.remove)),
+                            icon: const Icon(Icons.remove)),
                       ),
                     );
                   }),
@@ -50,14 +50,14 @@ class Checkout extends StatelessWidget {
           ElevatedButton(
             onPressed: () {},
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(BTNpink),
-              padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+              backgroundColor: MaterialStateProperty.all(bTNpink),
+              padding: MaterialStateProperty.all(const EdgeInsets.all(12)),
               shape: MaterialStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8))),
             ),
             child: Text(
               "Pay \$${carttt.price}",
-              style: TextStyle(fontSize: 19),
+              style: const TextStyle(fontSize: 19),
             ),
           ),
         ],

@@ -13,7 +13,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' show basename;
 
 class Register extends StatefulWidget {
-  Register({super.key});
+  const Register({super.key});
 
   @override
   State<Register> createState() => _RegisterState();
@@ -51,10 +51,10 @@ class _RegisterState extends State<Register> {
           print(imgName);
         });
       } else {
-        print("NO img selected");
+        showSnackBar(context, "NO img selected");
       }
     } catch (e) {
-      print("Error => $e");
+      showSnackBar(context, "Error => $e");
     }
     if (!mounted) return;
     Navigator.pop(context);
@@ -65,7 +65,7 @@ class _RegisterState extends State<Register> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          padding: EdgeInsets.all(22),
+          padding: const EdgeInsets.all(22),
           height: 170,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +74,7 @@ class _RegisterState extends State<Register> {
                 onTap: () async {
                   await uploadImage2Screen(ImageSource.camera);
                 },
-                child: Row(
+                child: const Row(
                   children: [
                     Icon(
                       Icons.camera,
@@ -90,14 +90,14 @@ class _RegisterState extends State<Register> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 22,
               ),
               GestureDetector(
                 onTap: () async {
                   await uploadImage2Screen(ImageSource.gallery);
                 },
-                child: Row(
+                child: const Row(
                   children: [
                     Icon(
                       Icons.photo_outlined,
@@ -166,7 +166,8 @@ class _RegisterState extends State<Register> {
       await storageRef.putFile(imgPath!);
       String urll = await storageRef.getDownloadURL();
 
-      print(credential.user!.uid);
+      showSnackBar(context, credential.user!.uid);
+
       CollectionReference users =
           FirebaseFirestore.instance.collection('userSSS');
 
@@ -201,7 +202,6 @@ class _RegisterState extends State<Register> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     emailController.dispose();
     passwordController.dispose();
     usernameController.dispose();
@@ -218,10 +218,10 @@ class _RegisterState extends State<Register> {
         elevation: 0,
         backgroundColor: appbarGreen,
       ),
-      backgroundColor: Color.fromARGB(255, 247, 247, 247),
+      backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.all(33.0),
+          padding: const EdgeInsets.all(33.0),
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -229,15 +229,15 @@ class _RegisterState extends State<Register> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(5),
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Color.fromARGB(125, 78, 91, 110),
                     ),
                     child: Stack(
                       children: [
                         imgPath == null
-                            ? CircleAvatar(
+                            ? const CircleAvatar(
                                 backgroundColor:
                                     Color.fromARGB(255, 225, 225, 225),
                                 radius: 71,
@@ -262,13 +262,13 @@ class _RegisterState extends State<Register> {
                               showmodel();
                             },
                             icon: const Icon(Icons.add_a_photo),
-                            color: Color.fromARGB(255, 94, 115, 128),
+                            color: const Color.fromARGB(255, 94, 115, 128),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 33,
                   ),
                   TextField(
@@ -277,10 +277,10 @@ class _RegisterState extends State<Register> {
                     obscureText: false,
                     decoration: decorationTextfield.copyWith(
                       hintText: "Enter Your username : ",
-                      suffixIcon: Icon(Icons.person),
+                      suffixIcon: const Icon(Icons.person),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 22,
                   ),
                   TextFormField(
@@ -289,10 +289,10 @@ class _RegisterState extends State<Register> {
                     obscureText: false,
                     decoration: decorationTextfield.copyWith(
                       hintText: 'Enter Your age : ',
-                      suffixIcon: Icon(Icons.pest_control_rodent),
+                      suffixIcon: const Icon(Icons.pest_control_rodent),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 22,
                   ),
                   TextFormField(
@@ -301,10 +301,10 @@ class _RegisterState extends State<Register> {
                     obscureText: false,
                     decoration: decorationTextfield.copyWith(
                       hintText: 'Enter Your title : ',
-                      suffixIcon: Icon(Icons.person_outline),
+                      suffixIcon: const Icon(Icons.person_outline),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 22,
                   ),
                   TextFormField(
@@ -321,10 +321,10 @@ class _RegisterState extends State<Register> {
                     obscureText: false,
                     decoration: decorationTextfield.copyWith(
                       hintText: "Enter Your Email : ",
-                      suffixIcon: Icon(Icons.email),
+                      suffixIcon: const Icon(Icons.email),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 22,
                   ),
                   TextFormField(
@@ -349,22 +349,17 @@ class _RegisterState extends State<Register> {
                           });
                         },
                         icon: isVisible
-                            ? Icon(Icons.visibility)
-                            : Icon(Icons.visibility_off),
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   Row(
                     children: [
                       Container(
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                          size: 15,
-                        ),
                         height: 20,
                         width: 20,
                         decoration: BoxDecoration(
@@ -373,26 +368,26 @@ class _RegisterState extends State<Register> {
                           border: Border.all(
                               color: const Color.fromARGB(255, 161, 159, 159)),
                         ),
+                        child: const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 11,
                       ),
-                      Text(
+                      const Text(
                         'At least 8 characters',
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
                     children: [
                       Container(
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                          size: 15,
-                        ),
                         height: 20,
                         width: 20,
                         decoration: BoxDecoration(
@@ -403,26 +398,26 @@ class _RegisterState extends State<Register> {
                           border: Border.all(
                               color: const Color.fromARGB(255, 161, 159, 159)),
                         ),
+                        child: const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 11,
                       ),
-                      Text(
+                      const Text(
                         'At least 1 number',
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
                     children: [
                       Container(
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                          size: 15,
-                        ),
                         height: 20,
                         width: 20,
                         decoration: BoxDecoration(
@@ -431,26 +426,26 @@ class _RegisterState extends State<Register> {
                           border: Border.all(
                               color: const Color.fromARGB(255, 161, 159, 159)),
                         ),
+                        child: const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 11,
                       ),
-                      Text(
+                      const Text(
                         'Has Uppercase',
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
                     children: [
                       Container(
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                          size: 15,
-                        ),
                         height: 20,
                         width: 20,
                         decoration: BoxDecoration(
@@ -459,26 +454,26 @@ class _RegisterState extends State<Register> {
                           border: Border.all(
                               color: const Color.fromARGB(255, 161, 159, 159)),
                         ),
+                        child: const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 11,
                       ),
-                      Text(
+                      const Text(
                         'Has Lowercase',
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
                     children: [
                       Container(
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                          size: 15,
-                        ),
                         height: 20,
                         width: 20,
                         decoration: BoxDecoration(
@@ -489,16 +484,21 @@ class _RegisterState extends State<Register> {
                           border: Border.all(
                               color: const Color.fromARGB(255, 161, 159, 159)),
                         ),
+                        child: const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 11,
                       ),
-                      Text(
+                      const Text(
                         'Has Special Characters',
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 33,
                   ),
                   ElevatedButton(
@@ -510,23 +510,25 @@ class _RegisterState extends State<Register> {
                         if (!mounted) return;
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => Login()),
+                          MaterialPageRoute(
+                              builder: (context) => const Login()),
                         );
                       } else {
                         showSnackBar(context, "ERROR");
                       }
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(BTNgreen),
-                      padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+                      backgroundColor: MaterialStateProperty.all(bTNgreen),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(12)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8))),
                     ),
                     child: isLoading
-                        ? CircularProgressIndicator(
+                        ? const CircularProgressIndicator(
                             color: Colors.white,
                           )
-                        : Text(
+                        : const Text(
                             "Register",
                             style: TextStyle(fontSize: 19),
                           ),
@@ -534,7 +536,7 @@ class _RegisterState extends State<Register> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Do not have an account?',
                         style: TextStyle(fontSize: 18),
                       ),
@@ -542,10 +544,11 @@ class _RegisterState extends State<Register> {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => Login()),
+                            MaterialPageRoute(
+                                builder: (context) => const Login()),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           'sign in',
                           style: TextStyle(
                               fontSize: 20,

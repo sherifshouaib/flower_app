@@ -21,7 +21,7 @@ class Home extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(top: 22),
         child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 3 / 2,
               crossAxisSpacing: 10,
@@ -38,6 +38,19 @@ class Home extends StatelessWidget {
                 );
               },
               child: GridTile(
+                footer: GridTileBar(
+                  backgroundColor: const Color.fromARGB(66, 73, 127, 110),
+                  trailing: IconButton(
+                      color: const Color.fromARGB(255, 62, 94, 70),
+                      onPressed: () {
+                        carttt.add(items[index]);
+                      },
+                      icon: const Icon(Icons.add)),
+                  leading: const Text("\$12.99"),
+                  title: const Text(
+                    "",
+                  ),
+                ),
                 child: Stack(
                   children: [
                     Positioned(
@@ -52,19 +65,6 @@ class Home extends StatelessWidget {
                     ),
                   ],
                 ),
-                footer: GridTileBar(
-                  backgroundColor: Color.fromARGB(66, 73, 127, 110),
-                  trailing: IconButton(
-                      color: Color.fromARGB(255, 62, 94, 70),
-                      onPressed: () {
-                        carttt.add(items[index]);
-                      },
-                      icon: Icon(Icons.add)),
-                  leading: Text("\$12.99"),
-                  title: Text(
-                    "",
-                  ),
-                ),
               ),
             );
           },
@@ -77,77 +77,77 @@ class Home extends StatelessWidget {
             Column(
               children: [
                 UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       
                         image: AssetImage("assets/images/test.jpg"),
                         fit: BoxFit.cover),
                   ),
-                  currentAccountPicture: ImgUser(),
+                  currentAccountPicture: const ImgUser(),
 
-                  accountName: Text('Sherif Shouaib',
+                  accountName: const Text('Sherif Shouaib',
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                       )),
                   accountEmail: Text(userrr.email!),
                 ),
                 ListTile(
-                    title: Text("Home"),
-                    leading: Icon(Icons.home),
+                    title: const Text("Home"),
+                    leading: const Icon(Icons.home),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Home(),
+                          builder: (context) => const Home(),
                         ),
                       );
                     }),
                 ListTile(
-                    title: Text("My products"),
-                    leading: Icon(Icons.add_shopping_cart),
+                    title: const Text("My products"),
+                    leading: const Icon(Icons.add_shopping_cart),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Checkout(),
+                          builder: (context) => const Checkout(),
                         ),
                       );
                     }),
                 ListTile(
-                    title: Text("About"),
-                    leading: Icon(Icons.help_center),
+                    title: const Text("About"),
+                    leading: const Icon(Icons.help_center),
                     onTap: () {}),
                 ListTile(
-                    title: Text("Profile Page"),
-                    leading: Icon(Icons.person),
+                    title: const Text("Profile Page"),
+                    leading: const Icon(Icons.person),
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfilePage()));
+                              builder: (context) => const ProfilePage()));
                     }),
                 ListTile(
-                    title: Text("Logout"),
-                    leading: Icon(Icons.exit_to_app),
+                    title: const Text("Logout"),
+                    leading: const Icon(Icons.exit_to_app),
                     onTap: () {
                       FirebaseAuth.instance.signOut();
                     }),
               ],
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 12),
-              child: Text("Developed by Ali Hassan © 2024",
+              margin: const EdgeInsets.only(bottom: 12),
+              child: const Text("Developed by Ali Hassan © 2024",
                   style: TextStyle(fontSize: 16)),
             )
           ],
         ),
       ),
       appBar: AppBar(
-        actions: [
-          ProductsAndPrice(),
+        actions:const [
+            ProductsAndPrice(),
         ],
         backgroundColor: appbarGreen,
-        title: Text('Home'),
+        title: const Text('Home'),
       ),
     );
   }
