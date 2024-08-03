@@ -1,13 +1,16 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/widgets/colors.dart';
 import 'package:e_commerce_app/widgets/data_from_firestore.dart';
 import 'package:e_commerce_app/widgets/user_image_from_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart' show basename;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -20,6 +23,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final credential = FirebaseAuth.instance.currentUser;
 
   File? imgPath;
+  String? imgName;
+  CollectionReference users = FirebaseFirestore.instance.collection('userSSS');
 
   uploadImage2Screen() async {
     final pickedImg =
@@ -28,6 +33,9 @@ class _ProfilePageState extends State<ProfilePage> {
       if (pickedImg != null) {
         setState(() {
           imgPath = File(pickedImg.path);
+          imgName = basename(pickedImg.path);
+          int random = Random().nextInt(9999999);
+          imgName = "$random$imgName";
         });
       } else {
         print("NO img selected");
@@ -69,7 +77,6 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Center(
                 child: Container(
                   padding: EdgeInsets.all(5),
@@ -93,8 +100,22 @@ class _ProfilePageState extends State<ProfilePage> {
                         left: 102,
                         bottom: -10,
                         child: IconButton(
-                          onPressed: () {
-                            uploadImage2Screen();
+                          onPressed: () async {
+                            await uploadImage2Screen();
+
+                            if (imgPath != null) {
+                              // Upload image to firebase storage
+                              final storageRef = FirebaseStorage.instance
+                                  .ref('users-imgs/$imgName');
+                              await storageRef.putFile(imgPath!);
+
+                              // Get img url
+                              String urlll = await storageRef.getDownloadURL();
+
+                              users.doc(credential!.uid).update({
+                                "imgLink": urlll,
+                              });
+                            }
                           },
                           icon: const Icon(Icons.add_a_photo),
                           color: Color.fromARGB(255, 94, 115, 128),
@@ -104,8 +125,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-
-              
               SizedBox(
                 height: 33,
               ),

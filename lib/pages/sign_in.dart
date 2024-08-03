@@ -18,21 +18,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  bool isLoading = false;
+
   bool isVisible = false;
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
 
   signIn() async {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.white,
-            ),
-          );
-        });
+    setState(() {
+      isLoading = true;
+    });
 
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -40,9 +36,9 @@ class _LoginState extends State<Login> {
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, "ERROR :  ${e.code} ");
     }
-
-    if (!mounted) return;
-    Navigator.pop(context);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -153,13 +149,17 @@ class _LoginState extends State<Login> {
                           MaterialPageRoute(builder: (context) => Register()),
                         );
                       },
-                      child: Text(
-                        'sign up',
-                        style: TextStyle(
-                          fontSize: 20,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
+                      child: isLoading
+                          ? CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : Text(
+                              'sign up',
+                              style: TextStyle(
+                                fontSize: 20,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
                     )
                   ],
                 ),
@@ -189,7 +189,6 @@ class _LoginState extends State<Login> {
                   margin: EdgeInsets.symmetric(vertical: 27),
                   child: GestureDetector(
                     onTap: () {
-
                       googleSignInProvider.googlelogin();
                     },
                     child: Container(
